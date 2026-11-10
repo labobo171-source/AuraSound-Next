@@ -4,9 +4,11 @@ A Persian, neon-themed Android music player built with Android WebView.
 
 ## Features
 - Five visual themes: Neon, Cyberpunk, Galaxy, Matrix and Gold
-- Local audio file selection and folder selection (where supported by Android's document picker)
+- Automatic local audio-library scan after the required Android audio permission is granted
+- Favorite heart on each track and a persistent Favorites library
 - Playlist sorting by name, file size, date and folder
 - Playback controls, seek bar, shuffle and repeat
+- Native foreground media playback service with Android MediaSession, lock-screen controls and playback notification
 - Web Audio processing: amplifier, bass, treble and 10-band equalizer
 - Circular audio visualizer and Three.js particle background
 - Large-button driving mode
@@ -22,5 +24,6 @@ GitHub Actions builds a debug APK on every push to `main` and on manual workflow
 
 ## Notes
 - Internet access is used to load Three.js and Font Awesome from their public CDNs.
-- This version is WebView-based. Native background playback and Android lock-screen media controls are not yet implemented with Media3.
-- The current output is a debug APK, not a Play Store-signed release.
+- Android prompts for audio-library permission; once granted, the app queries the device media library automatically.
+- The Android foreground service publishes a MediaSession and media notification for background playback and lock-screen controls.
+- This is a debug APK, not a Play Store-signed release.
