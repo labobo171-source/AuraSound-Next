@@ -14,6 +14,7 @@ public class MainActivity extends Activity{
  @JavascriptInterface public void setEqBand(int band,int level){startService(new Intent(MainActivity.this,PlaybackService.class).setAction(PlaybackService.ACTION_EQ_BAND).putExtra("band",band).putExtra("level",level));}
  @JavascriptInterface public void setEqBass(int level){startService(new Intent(MainActivity.this,PlaybackService.class).setAction(PlaybackService.ACTION_EQ_BASS).putExtra("level",level));}
  @JavascriptInterface public void setEqTreble(int level){startService(new Intent(MainActivity.this,PlaybackService.class).setAction(PlaybackService.ACTION_EQ_TREBLE).putExtra("level",level));}
+ @JavascriptInterface public void setEqAmp(float level){startService(new Intent(MainActivity.this,PlaybackService.class).setAction(PlaybackService.ACTION_EQ_AMP).putExtra("level",level));}
  @JavascriptInterface public void resetNativeEq(){startService(new Intent(MainActivity.this,PlaybackService.class).setAction(PlaybackService.ACTION_EQ_RESET));}
  @JavascriptInterface public void shareTrack(String title,String uri){runOnUiThread(()->{try{Intent i=new Intent(Intent.ACTION_SEND);i.setType("audio/*");i.putExtra(Intent.EXTRA_STREAM,Uri.parse(uri));i.putExtra(Intent.EXTRA_SUBJECT,title);i.putExtra(Intent.EXTRA_TEXT,title);i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);startActivity(Intent.createChooser(i,"اشتراک‌گذاری آهنگ"));}catch(Exception e){Toast.makeText(MainActivity.this,"اشتراک‌گذاری ممکن نیست",Toast.LENGTH_SHORT).show();}});}
  },"AuraNative");
