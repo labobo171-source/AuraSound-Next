@@ -14,7 +14,7 @@ public class MainActivity extends Activity{
  },"AuraNative");
  webView.setWebChromeClient(new WebChromeClient(){@Override public boolean onShowFileChooser(WebView v,ValueCallback<Uri[]> cb,FileChooserParams p){if(fileCallback!=null)fileCallback.onReceiveValue(null);fileCallback=cb;Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT);i.addCategory(Intent.CATEGORY_OPENABLE);i.setType("audio/*");i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);startActivityForResult(i,FILE_PICKER);return true;}});
  webView.setWebViewClient(new WebViewClient(){@Override public void onPageFinished(WebView view,String url){pageReady=true;if(hasPermission())sendTracks();else requestAudioPermission();requestNotificationPermission();}});setContentView(webView);webView.loadUrl("file:///android_asset/index.html");
- registerReceiver(playbackReceiver,new IntentFilter(PlaybackService.ACTION_STATE));
+ if(Build.VERSION.SDK_INT>=33)registerReceiver(playbackReceiver,new IntentFilter(PlaybackService.ACTION_STATE),Context.RECEIVER_NOT_EXPORTED);else registerReceiver(playbackReceiver,new IntentFilter(PlaybackService.ACTION_STATE));
  }
  private void requestNotificationPermission(){if(Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_PERMISSION);}
  private boolean hasPermission(){if(Build.VERSION.SDK_INT>=33)return checkSelfPermission(Manifest.permission.READ_MEDIA_AUDIO)==PackageManager.PERMISSION_GRANTED;return Build.VERSION.SDK_INT<23||checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED;}
